@@ -5,11 +5,11 @@ export default function MenuPage() {
   // Static placeholder items for scaffolding
   const items: MenuItem[] = [
     {
-      id: '1' as any,
+      id: '1' as unknown as MenuItem['id'],
       name: 'Classic Burger',
       description: 'Juicy patty with fresh toppings',
       basePrice: { amount: 899, currency: 'USD' },
-      categoryId: 'c1' as any,
+      categoryId: 'c1' as unknown as MenuItem['categoryId'],
       isAvailable: true,
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),

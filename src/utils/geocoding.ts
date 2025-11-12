@@ -113,8 +113,22 @@ export async function searchLocations(query: string): Promise<GeocodingResult[]>
     
     const data = await response.json();
     
-    return data.map((item: any) => ({
-      name: item.address?.suburb || item.address?.neighbourhood || item.address?.city || item.name,
+    interface NominatimSearchResult {
+      lat: string;
+      lon: string;
+      display_name: string;
+      name?: string;
+      type: string;
+      address?: {
+        suburb?: string;
+        neighbourhood?: string;
+        city?: string;
+        [key: string]: string | undefined;
+      };
+    }
+    
+    return (data as NominatimSearchResult[]).map((item) => ({
+      name: item.address?.suburb || item.address?.neighbourhood || item.address?.city || item.name || 'Unknown',
       displayName: item.display_name,
       lat: parseFloat(item.lat),
       lon: parseFloat(item.lon),

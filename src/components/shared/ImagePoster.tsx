@@ -1,4 +1,5 @@
 import React from 'react';
+import Image from 'next/image';
 
 interface ImagePosterProps {
   imageUrl: string;
@@ -9,10 +10,12 @@ interface ImagePosterProps {
 export function ImagePoster({ imageUrl, alt = 'Banner', height = 'h-64' }: ImagePosterProps) {
   return (
     <div className={`w-full ${height} rounded-xl overflow-hidden relative`}>
-      <img 
+      <Image 
         src={imageUrl} 
         alt={alt}
-        className="w-full h-full object-cover"
+        fill
+        className="object-cover"
+        sizes="100vw"
       />
     </div>
   );

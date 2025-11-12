@@ -1,5 +1,6 @@
 'use client';
 import React from 'react';
+import Image from 'next/image';
 import type { MenuCategory } from '@/types/menu';
 
 interface CategoryBarProps {
@@ -25,9 +26,11 @@ export function CategoryBar({ categories, selectedId, onSelect }: CategoryBarPro
             }`}
           >
             {category.imageUrl ? (
-              <img
+              <Image
                 src={category.imageUrl}
                 alt={category.name}
+                width={64}
+                height={64}
                 className="w-full h-full object-cover"
               />
             ) : (

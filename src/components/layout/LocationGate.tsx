@@ -73,7 +73,7 @@ export function LocationGate({ children }: { children: React.ReactNode }) {
 
   const requestLocation = () => {
     if (!('geolocation' in navigator)) {
-      console.error('Geolocation not supported, trying IP fallback');
+      console.warn('Geolocation not supported, trying IP fallback');
       tryIPGeolocation();
       return;
     }
@@ -110,13 +110,13 @@ export function LocationGate({ children }: { children: React.ReactNode }) {
           console.log('Setting status to:', newStatus);
           setLocationStatus(newStatus);
         } catch (error) {
-          console.error('Error processing location:', error);
+          console.warn('Error processing location:', error);
           tryIPGeolocation();
         }
       },
       (error) => {
         clearTimeout(safetyTimeout);
-        console.error('Browser geolocation error:', {
+        console.warn('Browser geolocation error:', {
           code: error.code,
           message: error.message,
           PERMISSION_DENIED: error.code === 1,

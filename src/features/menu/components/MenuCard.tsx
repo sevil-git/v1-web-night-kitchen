@@ -1,5 +1,6 @@
 'use client';
 import React from 'react';
+import Image from 'next/image';
 import type { MenuItem } from '@/types/menu';
 import { Button } from '@/components/ui/Button';
 import { formatMoney } from '@/utils/format';
@@ -36,7 +37,15 @@ export function MenuCard({ item }: { item: MenuItem }) {
   return (
     <div className="border border-[#d7d7d7] rounded-lg overflow-hidden hover:shadow-lg transition-shadow bg-white">
       {item.imageUrl && (
-        <img src={item.imageUrl} alt={item.name} className="w-full h-40 object-cover" />
+        <div className="relative w-full h-40">
+          <Image 
+            src={item.imageUrl} 
+            alt={item.name} 
+            fill
+            className="object-cover"
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          />
+        </div>
       )}
       <div className="p-4">
         <div className="font-medium text-lg">{item.name}</div>
