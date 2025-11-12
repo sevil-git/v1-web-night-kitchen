@@ -1,26 +1,141 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Bitzy Color Theme */
+  --primary: #F3B617;      /* Golden Yellow - Primary brand color */
+  --secondary: #F67C29;    /* Deep Orange - Secondary/accent color */
+  --dark: #272d2f;         /* Dark gray - Text and dark elements */
+  --light: #d7d7d7;        /* Light gray - Borders and subtle backgrounds */
+  --background: #ffffff;   /* White background */
+  --foreground: #272d2f;   /* Dark text */
 }
 
 @theme inline {
+  /* Custom Colors */
+  --color-primary: var(--primary);
+  --color-primary-dark: #d9a314;
+  --color-primary-light: #f5c44a;
+  
+  --color-secondary: var(--secondary);
+  --color-secondary-dark: #e06a1f;
+  --color-secondary-light: #f89654;
+  
+  --color-dark: var(--dark);
+  --color-light: var(--light);
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  
+  /* Font families */
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  background: #ffffff;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
+  background: #ffffff;
+  color: #272d2f;
   font-family: Arial, Helvetica, sans-serif;
 }
+
+/* Hide scrollbar but keep functionality */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* Line clamp utilities */
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* --- Pan Loader (no Tailwind config needed) --- */
+@keyframes loader {
+  0% { width: 10%; transform: rotate(0deg); }
+  10% { left: 0%; transform: rotate(0deg); }
+  20% { width: 0%; left: 20%; }
+  30% { width: 25%; }
+  50% { left: 15%; width: 35%; }
+  70% { width: 30%; left: 18%; transform: rotate(240deg); }
+  90% { width: 30%; left: 10%; }
+  100% { width: 2%; left: 25%; transform: rotate(360deg); }
+}
+@keyframes pan {
+  0%   { transform: rotate(0deg);   transform-origin: top right; }
+  10%  { transform: rotate(-2deg);  transform-origin: top right; }
+  50%  { transform: rotate(15deg); }
+  100% { transform: rotate(0deg); }
+}
+@keyframes shadow {
+  0%   { width: 30%; }
+  50%  { width: 40%; left: 20px; }
+  100% { width: 30%; }
+}
+
+.pan-loader {
+  /* scalable size + proportional values */
+  --size: 180px; /* default (md) */
+  --b: calc(var(--size) * 10 / 180);      /* border thickness (10px at 180) */
+  --pan-h: calc(var(--size) * 20 / 180);  /* pan height (20px at 180) */
+  --handle-h: calc(var(--size) * 10 / 180);
+  --shadow-h: calc(var(--size) * 8 / 180);
+  --r10: calc(var(--size) * 10 / 180);
+  --r20: calc(var(--size) * 20 / 180);
+
+  position: relative;
+  width: var(--size);
+  height: var(--size);
+}
+
+/* sizes */
+.pan-loader-sm { --size: 120px; }
+.pan-loader-md { --size: 180px; } /* default */
+.pan-loader-lg { --size: 240px; }
+
+.pan-loader .loader {
+  position: relative;
+  top: 8%; left: 0;
+  z-index: 0;
+  width: 60%; height: 45%;
+  border: var(--b) solid transparent;
+  border-bottom: var(--b) solid #F67C29;
+  border-radius: 50%;
+  animation: loader 2s linear infinite;
+}
+
+.pan-loader .pan-container {
+  display: flex; width: 100%;
+  animation: pan 2s infinite;
+}
+
+.pan-loader .pan {
+  width: 60%; height: var(--pan-h);
+  background: linear-gradient(#000, #333);
+  border-bottom-right-radius: var(--r20);
+  border-bottom-left-radius: var(--r20);
+}
+
+.pan-loader .handle {
+  width: 40%; height: var(--handle-h);
+  background: linear-gradient(#000, #333);
+  border-radius: var(--r10);
+}
+
+.pan-loader .shadow {
+  position: relative;
+  top: 15%; left: 15%;
+  width: 30%; height: var(--shadow-h);
+  background: lightgray;
+  border-radius: var(--r20);
+  animation: shadow 2s infinite;
+}
+
