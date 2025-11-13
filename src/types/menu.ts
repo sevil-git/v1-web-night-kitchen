@@ -25,4 +25,22 @@ export type MenuItem = Timestamped & {
   isAvailable: boolean;
   options?: MenuItemOption[];
   tags?: string[];
+  rating?: number; // optional 0..5 for display/sorting
+};
+
+// Combos and meal deals
+export type Combo = {
+  id: ID;
+  name: string;
+  description?: string;
+  imageUrl?: string;
+  // List of included items (names or short labels)
+  includes: string[];
+  // Total price in Money terms
+  totalPrice: Money;
+  // For quick filtering/display
+  isVeg: boolean;
+  // Optional rating 0..5
+  rating?: number;
+  tags?: string[];
 };

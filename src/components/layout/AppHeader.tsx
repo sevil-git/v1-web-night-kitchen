@@ -6,11 +6,15 @@ import { useCartStore } from '@/stores/cartStore';
 import { useLocationStatus } from './LocationGate';
 import { LocationSearch } from '@/components/shared/LocationSearch';
 import Image from 'next/image';
+import { usePrefsStore } from '@/stores/prefsStore';
+import { VegToggle } from '@/components/shared/VegToggle';
 
 export function AppHeader() {
     const [searchQuery, setSearchQuery] = useState('');
     const lines = useCartStore((state) => state.lines);
     const { currentLocation, canDeliver } = useLocationStatus();
+    const vegOnly = usePrefsStore((s) => s.vegOnly);
+    const toggleVegOnly = usePrefsStore((s) => s.toggleVegOnly);
 
     const totalItems = lines.reduce((sum, line) => sum + line.quantity, 0);
 
@@ -26,12 +30,13 @@ export function AppHeader() {
 
                 {/* MOBILE (< md): stacked layout */}
                 <div className="md:hidden space-y-2">
-                    {/* Row 1: Logo + Cart */}
+                    {/* Row 1: Logo + Veg toggle + Cart */}
                     <div className="flex items-center justify-between gap-3">
                         <div className="flex items-center gap-2">
-                            <Image src="/logo.png" alt={APP.NAME} width={44} height={44} className="rounded" />
+                            <Image src="/logo.png" alt={APP.NAME} width={40} height={40} className="rounded" />
                             {/* <span className="font-bold text-lg tracking-tight text-[#272d2f]">{APP.NAME}</span> */}
                         </div>
+                        <VegToggle value={vegOnly} onToggle={toggleVegOnly} showLabel={false} className="p-2" />
                         <button
                             aria-label="Cart"
                             className="relative p-2 hover:bg-[#F3B617]/10 rounded-md transition-colors"
@@ -45,10 +50,10 @@ export function AppHeader() {
                         </button>
                     </div>
 
-                        {/* Row 2: Location selector */}
-                        <div className="flex">
-                            <LocationSearch />
-                        </div>
+                    {/* Row 2: Location selector */}
+                    <div className="flex">
+                        <LocationSearch />
+                    </div>
                     {/* Row 3: Search bar */}
                     <div className="relative">
                         <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#272d2f]/40" />
@@ -83,6 +88,8 @@ export function AppHeader() {
                                     className="w-full pl-11 pr-4 py-2.5 text-base border border-[#d7d7d7] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#F3B617] focus:border-transparent transition-all"
                                 />
                             </div>
+                            {/* Veg toggle */}
+                            <VegToggle value={vegOnly} onToggle={toggleVegOnly} />
                         </div>
                     </div>
 
@@ -94,7 +101,7 @@ export function AppHeader() {
                         >
                             <ShoppingCart className="w-6 h-6 text-[#272d2f]" />
                             {totalItems > 0 && (
-                                                <span className="absolute -top-1 -right-1 bg-[#F67C29] text-white text-xs font-bold rounded-full min-w-5 h-5 px-1 flex items-center justify-center">
+                                <span className="absolute -top-1 -right-1 bg-[#F67C29] text-white text-xs font-bold rounded-full min-w-5 h-5 px-1 flex items-center justify-center">
                                     {totalItems}
                                 </span>
                             )}
